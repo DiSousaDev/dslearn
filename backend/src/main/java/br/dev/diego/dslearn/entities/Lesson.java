@@ -10,8 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -30,6 +33,9 @@ public abstract class Lesson {
     @ManyToOne
     @JoinColumn(name = "section_id")
     private Section section;
+
+    @OneToMany(mappedBy = "lesson")
+    private final List<Deliver> deliveries = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "tb_lessons_done",
@@ -80,6 +86,10 @@ public abstract class Lesson {
 
     public void setSection(Section section) {
         this.section = section;
+    }
+
+    public List<Deliver> getDeliveries() {
+        return deliveries;
     }
 
     public Set<Enrollment> getEnrollmentsDone() {
