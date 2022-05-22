@@ -1,7 +1,5 @@
 package br.dev.diego.dslearn.entities;
 
-import br.dev.diego.dslearn.Topic;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

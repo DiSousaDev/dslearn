@@ -1,9 +1,4 @@
-package br.dev.diego.dslearn;
-
-import br.dev.diego.dslearn.entities.Lesson;
-import br.dev.diego.dslearn.entities.Offer;
-import br.dev.diego.dslearn.entities.Reply;
-import br.dev.diego.dslearn.entities.User;
+package br.dev.diego.dslearn.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
