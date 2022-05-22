@@ -2,6 +2,8 @@ package br.dev.diego.dslearn.controllers.exceptions;
 
 import br.dev.diego.dslearn.services.exceptions.DataNotFoundException;
 import br.dev.diego.dslearn.services.exceptions.DatabaseException;
+import br.dev.diego.dslearn.services.exceptions.ForbiddenException;
+import br.dev.diego.dslearn.services.exceptions.UnauthorizedException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +42,26 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         err.setStatus(status.value());
         err.setMessage(e.getMessage());
         err.setPath(req.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<OAuth2CustomError> forbidden(ForbiddenException e, HttpServletRequest req) {
+        OAuth2CustomError err = new OAuth2CustomError();
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        err.setTimeStamp(Instant.now());
+        err.setError("Forbidden");
+        err.setErrorDescription(e.getMessage());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<OAuth2CustomError> unauthorized(UnauthorizedException e, HttpServletRequest req) {
+        OAuth2CustomError err = new OAuth2CustomError();
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+        err.setTimeStamp(Instant.now());
+        err.setError("Unauthorized");
+        err.setErrorDescription(e.getMessage());
         return ResponseEntity.status(status).body(err);
     }
 

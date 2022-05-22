@@ -32,7 +32,7 @@ import static br.dev.diego.dslearn.util.DsLearnMessages.naoEncontrado;
 @Service
 public class UserService implements UserDetailsService {
 
-    private static Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     UserRepository repository;
@@ -42,6 +42,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthService authService;
 
     @Override
     public UserDetails loadUserByUsername(String email) {
@@ -62,6 +65,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional(readOnly = true)
     public UserDto findById(Long id) {
+        authService.validateSelfOrAdmin(id);
         User user = findUserById(id);
         return new UserDto(user);
     }

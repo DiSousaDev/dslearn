@@ -45,7 +45,7 @@ public class User implements Serializable, UserDetails {
     private final Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Notification> notifications = new ArrayList<>();
+    private final List<Notification> notifications = new ArrayList<>();
 
     public User() {
     }
@@ -95,6 +95,10 @@ public class User implements Serializable, UserDetails {
 
     public List<Notification> getNotifications() {
         return notifications;
+    }
+
+    public boolean hasHole(String roleName) {
+        return roles.stream().anyMatch(role -> role.getAuthority().equals(roleName));
     }
 
     @Override
